@@ -45,4 +45,9 @@ export const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#CCC",
   },
+
+  button: {
+    height: 30,
+    width: 30,
+  },
 });

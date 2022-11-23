@@ -5,37 +5,37 @@ import { styles } from "./styles";
 const data = [
   {
     id: 1,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 2,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 3,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 4,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 5,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 6,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
   {
     id: 7,
-    name: "Anyone",
+    message: "Anyone is here hey there why you are here ",
     image: require("../../assets/avatar.svg"),
   },
 ];
@@ -47,13 +47,13 @@ const Users = () => {
         <View style={styles.listHeader}>
           <Text style={styles.listHeadline}>Users</Text>
         </View>
-        {data.map(({ id, name, image }) => (
+        {data.map(({ id, message, image }) => (
           <View key={id}>
             <View style={styles.item}>
               <View style={styles.avatarContainer}>
                 <Image source={image} style={styles.avatar} />
               </View>
-              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.name}>{message}</Text>
             </View>
             <View style={styles.separator}></View>
           </View>
