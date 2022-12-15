@@ -1,27 +1,40 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { observer } from "mobx-react-lite";
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
+import CounterStore from "../store/count";
+import ClickCounter from "../store/click";
 
-  const increaseValue = () => setCount((prevCount) => prevCount + 1);
-  const decreaseValue = () => setCount((prevCount) => prevCount - 1);
+const Counter = observer(() => {
+  const onPlusClick = () => {
+    CounterStore.increment();
+    ClickCounter.increment();
+  };
+
+  const onMinusClick = () => {
+    CounterStore.decrement();
+    ClickCounter.increment();
+  };
+
+  const onResetClick = () => CounterStore.reset();
 
   return (
     <>
       <Text>Counter</Text>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.buttonWrapper} onPress={increaseValue}>
+        <TouchableOpacity style={styles.buttonWrapper} onPress={onPlusClick}>
           <Text style={styles.number}>+</Text>
         </TouchableOpacity>
-        <Text style={styles.number}>{count}</Text>
-        <TouchableOpacity style={styles.buttonWrapper} onPress={decreaseValue}>
+        <Text style={styles.number}>{CounterStore.count}</Text>
+        <TouchableOpacity style={styles.buttonWrapper} onPress={onMinusClick}>
           <Text style={styles.number}>-</Text>
         </TouchableOpacity>
       </View>
+      <Button onPress={onResetClick} title="Reset" />
+      <Text>Total click count: {ClickCounter.count}</Text>
     </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
