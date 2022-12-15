@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import {
   FlatList,
   StyleSheet,
@@ -8,27 +9,28 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const Todo = ({ todos, navigation, toggleComplete, deleteTodo }) => {
+import TodoStore from "./store/todo";
+import { toJS } from "mobx";
+
+const Todo = ({ navigation }) => {
+  console.log(toJS(TodoStore.todos));
   return (
     <FlatList
-      data={todos}
+      data={TodoStore.todos}
       keyExtractor={(_, index) => index.toString()}
       renderItem={({ item }) => (
         <View style={styles.itemWrapper}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("TodoFunctions", {
-                itemId: todos.indexOf(item),
-                todos: todos,
-                toggleComplete: toggleComplete,
-                deleteTodo: deleteTodo,
+                itemId: TodoStore.todos.indexOf(item),
               })
             }
           >
             <Text
               style={{
                 flex: 3,
-                textDecorationLine: item.checked ? "line-through" : "none",
+                textDecorationLine: item.completed ? "line-through" : "none",
               }}
             >
               {item.title}
@@ -36,12 +38,12 @@ const Todo = ({ todos, navigation, toggleComplete, deleteTodo }) => {
           </TouchableOpacity>
           <View style={styles.iconsWrapper}>
             <View style={styles.icon}>
-              <TouchableOpacity onPress={() => toggleComplete(item.title)}>
+              <TouchableOpacity onPress={() => TodoStore.completeTodo(item.id)}>
                 <AntDesign name="check" size={28} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.icon}>
-              <TouchableOpacity onPress={() => deleteTodo(item.title)}>
+              <TouchableOpacity onPress={() => TodoStore.deleteTodo(item.id)}>
                 <AntDesign name="close" size={28} color="black" />
               </TouchableOpacity>
             </View>
@@ -72,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Todo;
+export default observer(Todo);

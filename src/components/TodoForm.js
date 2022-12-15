@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
@@ -8,14 +7,17 @@ import {
   View,
 } from "react-native";
 
-const TodoForm = ({ addTodo }) => {
+import TodoStore from "./store/todo";
+
+const TodoForm = () => {
   const [input, setInput] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    addTodo(input);
-
+  const onSubmit = () => {
+    TodoStore.createTodo({
+      id: Date.now().toString(),
+      completed: false,
+      title: input,
+    });
     setInput("");
   };
 
@@ -26,10 +28,9 @@ const TodoForm = ({ addTodo }) => {
         onChangeText={setInput}
         value={input}
       />
-      <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+      <TouchableOpacity onPress={onSubmit} style={styles.submitButton}>
         <Text>Add</Text>
       </TouchableOpacity>
-      {/* <Button title="ADD" onPress={handleSubmit} /> */}
     </View>
   );
 };

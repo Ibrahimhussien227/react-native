@@ -1,12 +1,15 @@
 import React from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { observer } from "mobx-react-lite";
+
+import TodoStore from "./store/todo";
 
 const TodoFunctions = ({ navigation, route }) => {
-  const { itemId, todos, toggleComplete, deleteTodo } = route.params;
-  const todo = todos[itemId];
+  const { itemId } = route.params;
+  const todo = TodoStore.todos[itemId];
 
   const onRemove = () => {
-    deleteTodo(todo.title);
+    TodoStore.deleteTodo(todo.id);
     navigation.goBack();
   };
 
@@ -15,7 +18,7 @@ const TodoFunctions = ({ navigation, route }) => {
       <Text
         style={{
           ...styles.title,
-          textDecorationLine: todo.checked ? "line-through" : "none",
+          textDecorationLine: todo.completed ? "line-through" : "none",
         }}
       >
         {" "}
@@ -25,8 +28,7 @@ const TodoFunctions = ({ navigation, route }) => {
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => {
-            toggleComplete(todo.title);
-            navigation.goBack();
+            TodoStore.completeTodo(todo.id);
           }}
         >
           <Text>Check</Text>
@@ -78,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TodoFunctions;
+export default observer(TodoFunctions);

@@ -1,9 +1,7 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-const DoneTasks = ({ route }) => {
-  const { todos } = route.params;
-
+const DoneTasks = ({ todos }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Done Tasks </Text>
