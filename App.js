@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { observer } from "mobx-react-lite";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
+import ProductList from "./src/components/ProductList";
+import ProductCard from "./src/components/ProductCard";
+import Cart from "./src/components/Cart";
+import Favorite from "./src/components/Favorite";
+
+const Stack = createNativeStackNavigator();
+
+const App = observer(() => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home">
+          {(props) => <ProductList {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="ProductCard">
+          {(props) => <ProductCard {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Cart">
+          {(props) => <Cart {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Favorite">
+          {(props) => <Favorite {...props} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
+
+export default App;
